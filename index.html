@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para Vos 🎄❤️</title>
+  <meta name="description" content="Regalo de navidad Para Guadita"/>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- FX -->
+  <canvas id="snow"></canvas>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <!-- Guirnalda (luces navideñas sutiles) -->
+  <div class="garland" aria-hidden="true"></div>
+
+  <!-- Audio -->
+  <audio id="bgMusic" preload="auto" loop>
+    <source src="assets/music/bg.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- HUD -->
+  <header class="hud">
+    <button class="hud-btn" id="btnScrollTop" title="Arriba">
+      <svg class="icon"><use href="assets/icons/sprite.svg#icon-arrow-up"></use></svg>
+    </button>
+
+    <div class="hud-center">
+      <div class="hud-pill">
+        <span class="dot-heart"></span>
+        <span id="hudTitle">Regalo de Navidad 2025</span>
+      </div>
+
+      <div class="progress">
+        <div class="progress__bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="hud-right">
+      <button class="hud-btn hud-music" id="musicBtn" aria-label="Música">
+        <svg class="icon" id="musicIcon"><use href="assets/icons/sprite.svg#icon-music"></use></svg>
+        <span id="musicLabel">Música</span>
+      </button>
+
+      <button class="hud-btn" id="btnHelp" title="Tips">
+        <svg class="icon"><use href="assets/icons/sprite.svg#icon-sparkle"></use></svg>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="app">
+    <!-- 1) Pantalla Inicial -->
+    <section class="section hero" id="s1" data-title="Inicio">
+      <div class="hero__card reveal">
+        <div class="hero__hearts" aria-hidden="true">
+          <span>❤️</span><span>💗</span><span>✨</span><span>❤️</span><span>🎄</span><span>💞</span>
+        </div>
+
+        <p class="hero__tag">Navidad 2025 · Hecho Por JP</p>
+
+        <h1 class="hero__title">
+          <span class="hero__type" id="typeTitle"></span><span class="cursor" aria-hidden="true"></span>
+        </h1>
+
+        <p class="hero__sub" id="heroSub"></p>
+
+        <div class="hero__actions">
+          <button class="btn btn--primary" id="startBtn">
+            <svg class="icon"><use href="assets/icons/sprite.svg#icon-play"></use></svg>
+            Empezar ❤️
+          </button>
+        </div>
+
+        <div class="hero__note">
+          <span class="mini-badge">TIP</span>
+          Tocá <b>Empezar</b> para empezar con el recorrido
+        </div>
+      </div>
+
+      <div class="scroll-cue" aria-hidden="true">
+        <svg class="icon"><use href="assets/icons/sprite.svg#icon-chevron-down"></use></svg>
+      </div>
+    </section>
+
+    <!-- 2) Línea del Tiempo -->
+    <section class="section" id="s2" data-title="Timeline">
+      <div class="wrap">
+        <header class="sec-head reveal">
+          <p class="sec-kicker">Nuestra historia</p>
+          <h2>Línea del tiempo</h2>
+          <p>Momentos que me hacen sonreír cada vez que los pienso.</p>
+        </header>
+
+        <div class="timeline">
+          <div class="timeline__rail" aria-hidden="true"></div>
+          <div class="timeline__items" id="timelineItems"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) Álbum de fotos -->
+    <section class="section" id="s3" data-title="Fotos">
+      <div class="wrap">
+        <header class="sec-head reveal">
+          <p class="sec-kicker">Recuerdos</p>
+          <h2>Álbum de fotos</h2>
+          <p>Hice este album para recordar momentos y revivir dias especiales. Te amo Fuentes</p>
+        </header>
+
+        <div class="gallery reveal" id="galleryGrid"></div>
+      </div>
+
+      <!-- Gallery Modal -->
+      <div class="modal" id="galleryModal" aria-hidden="true">
+        <div class="modal__backdrop" data-close="galleryModal"></div>
+        <div class="modal__card modal__card--media">
+          <div class="modal__head">
+            <div class="modal__title">
+              <span class="mini-badge">FOTO</span>
+              <span id="galleryTitle">Foto</span>
+            </div>
+            <div class="modal__actions">
+              <button class="hud-btn" id="prevPhoto" aria-label="Anterior">
+                <svg class="icon"><use href="assets/icons/sprite.svg#icon-prev"></use></svg>
+              </button>
+              <button class="hud-btn" id="nextPhoto" aria-label="Siguiente">
+                <svg class="icon"><use href="assets/icons/sprite.svg#icon-next"></use></svg>
+              </button>
+              <button class="hud-btn" data-close="galleryModal" aria-label="Cerrar">
+                <svg class="icon"><use href="assets/icons/sprite.svg#icon-close"></use></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="media">
+            <img id="galleryImage" alt="Foto" />
+            <p class="media__cap" id="galleryCaption"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) Video hablando (con adivinanza) -->
+    <section class="section" id="s4" data-title="Video">
+      <div class="wrap">
+        <header class="sec-head reveal">
+          <p class="sec-kicker">Ahora sí… yo</p>
+          <h2>Un video que hice para vos</h2>
+          <p>Antes de verlo vas a tener q descubirir una palabra</p>
+        </header>
+
+        <div class="card reveal">
+          <div class="card__top">
+            <span class="mini-badge mini-badge--soft">❤️</span>
+            <span>Te lo digo con mi voz</span>
+          </div>
+
+          <!-- Gate del video -->
+          <div class="gate" id="videoGate">
+            <div class="gate__badge">
+              <svg class="icon"><use href="assets/icons/sprite.svg#icon-lock"></use></svg>
+              <span>Video bloqueado</span>
+            </div>
+
+            <h3 class="gate__title">Antes de verlo vas a tener que descubrir una palabra</h3>
+            <p class="gate__text" id="gateRiddle">
+              Palabra que me decías antes de ser novio que la usaba mucho yo, en especial cuando decia te quiero y la palabra, y que ahora me molesta un poquito, por que ya somos novios.
+              
+            </p>
+
+            <div class="gate__form">
+              <input
+                class="gate__input"
+                id="gateInput"
+                type="text"
+                placeholder="Escribí la palabra..."
+                autocomplete="off"
+                inputmode="text"
+              />
+              <button class="btn btn--primary" id="gateBtn">
+                Desbloquear ❤️
+                <svg class="icon"><use href="assets/icons/sprite.svg#icon-unlock"></use></svg>
+              </button>
+            </div>
+
+            <p class="gate__hint" id="gateHint">Tip: no importa si lo escribís en mayúsculas o minúsculas</p>
+            <p class="gate__error" id="gateError" aria-live="polite"></p>
+          </div>
+
+          <!-- El iframe se inserta recién cuando desbloquea -->
+          <div class="video video--locked" id="videoEmbed"></div>
+
+          <div class="card__bottom" id="videoNote">
+            Después del video… seguí bajando 
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5) Contador de días juntos -->
+    <section class="section" id="s5" data-title="Días">
+      <div class="wrap">
+        <header class="sec-head reveal">
+          <p class="sec-kicker">Tiempo juntos</p>
+          <h2>Contador de días desde que nos conocemos</h2>
+          <p>Porque cada día con vos cuenta y mucho.</p>
+        </header>
+
+        <div class="counter reveal">
+          <div class="counter__big">
+            <span id="daysCount">0</span>
+            <span class="counter__unit">días</span>
+          </div>
+
+          <div class="counter__row">
+            <div class="pill">
+              <span class="pill__label">y también:</span>
+              <span class="pill__value" id="timeBreakdown">11h 30m</span>
+            </div>
+            <div class="pill">
+              <span class="pill__label">desde:</span>
+              <span class="pill__value" id="sinceDate">13/01/2024</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6) Frases que le dedico -->
+    <section class="section" id="s6" data-title="Frases">
+      <div class="wrap">
+        <header class="sec-head reveal">
+          <p class="sec-kicker">Algunas frases que te dedico</p>
+          <p>Una por una… para que las sientas.</p>
+        </header>
+
+        <div class="carousel reveal">
+          <div class="quote-card">
+            <div class="quote-card__text" id="dedicationText"></div>
+            <div class="quote-card__meta" id="dedicationMeta"></div>
+          </div>
+
+          <div class="carousel__controls">
+            <button class="btn btn--ghost" id="dedPrev">
+              <svg class="icon"><use href="assets/icons/sprite.svg#icon-prev"></use></svg>
+              Anterior
+            </button>
+            <button class="btn btn--primary" id="dedNext">
+              Siguiente
+              <svg class="icon"><use href="assets/icons/sprite.svg#icon-next"></use></svg>
+            </button>
+          </div>
+
+          <div class="dots" id="dedDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7) Frases de canciones -->
+    <section class="section" id="s7" data-title="Canciones">
+      <div class="wrap">
+        <header class="sec-head reveal">
+          <p class="sec-kicker">Música</p>
+          <h2>Frases de canciones que te dedico</h2>
+          <p>Esas líneas que parecen hablar de nosotros.</p>
+        </header>
+
+        <div class="carousel reveal">
+          <div class="quote-card quote-card--soft">
+            <div class="quote-card__text" id="songText"></div>
+            <div class="quote-card__meta" id="songMeta"></div>
+          </div>
+
+          <div class="carousel__controls">
+            <button class="btn btn--ghost" id="songPrev">
+              <svg class="icon"><use href="assets/icons/sprite.svg#icon-prev"></use></svg>
+              Anterior
+            </button>
+            <button class="btn btn--primary" id="songNext">
+              Siguiente
+              <svg class="icon"><use href="assets/icons/sprite.svg#icon-next"></use></svg>
+            </button>
+          </div>
+
+          <div class="dots" id="songDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8) Objetivos 2026 -->
+    <section class="section" id="s8" data-title="2026">
+      <div class="wrap">
+        <header class="sec-head reveal">
+          <p class="sec-kicker">Futuro</p>
+          <h2>Antes de arrancar el 2026 me gustaria sumar algunos objetivos para el 2026</h2>
+          <p>Para seguir sumando momentos lindos juntos.</p>
+        </header>
+
+        <div class="goals reveal" id="goalsGrid"></div>
+
+        <div class="goals-actions reveal">
+          <button class="btn btn--ghost" id="resetGoals">
+            <svg class="icon"><use href="assets/icons/sprite.svg#icon-refresh"></use></svg>
+            Reiniciar checks
+          </button>
+          <span class="muted">Se guardan en este dispositivo.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9) Pregunta interactiva -->
+    <section class="section finale" id="s9" data-title="Final">
+      <div class="wrap">
+        <div class="final-card reveal">
+          <p class="sec-kicker">Para cerrar tengo una pregunta que tiene solo una respuesta AJAJAJ</p>
+          <h2 id="finalQuestion">¿Seguimos escribiendo esta historia juntos?</h2>
+          <p class="muted" id="finalSub">Elegí lo que sientas.</p>
+
+          <div class="final-actions">
+            <button class="btn btn--primary btn--big" id="btnYes">
+              <svg class="icon"><use href="assets/icons/sprite.svg#icon-heart"></use></svg>
+              Sí 💖
+            </button>
+            <button class="btn btn--ghost btn--big" id="btnObvio">
+              <svg class="icon"><use href="assets/icons/sprite.svg#icon-sparkle"></use></svg>
+              Obvio ✨
+            </button>
+          </div>
+
+          <div class="final-msg" id="finalMessage" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <span>Te amo miamor sos el amor de mi vida nunca lo dudes. Feliz  Navidad</span>
+        <span class="muted">❤️</span>
+      </div>
+    </footer>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
