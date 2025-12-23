@@ -27,14 +27,14 @@ const TIMELINE = [
   { date: "8/03/2025", title: "Primer contacto con la flia", desc: "Ese fue mi primer dia en tu casa, me cago en el puto control de tu tele que no funcionaba, conoci a toda tu familia jajaja. Te amo", media: "img/etapa1.mp4" },
   { date: "20/03/2025", title: "Stich o JF", desc: "Mi primer regalito a gf, nunca pense que iria a regalarte eso pero cunado lo vi dije este si o si ", media: "img/etapa2.jpeg" },
   { date: "22/03/2025", title: "Primera cena", desc: "Un momento que quiero guardar para siempre el puto miedo q tenia nunca mas lo voy a sentir", media: "img/etapa3.mp4" },
-  { date: "17/04/2025", title: "Primer Cumpleaños de Guadita", desc: "Primera evz que dije presente en un cumpleaños de Guadita. HDP ME MANDASTE CON TODA TU FLIA, claramente no queria ajajajaaj", media: "img/etapa4.jpeg" },
+  { date: "17/04/2025", title: "Primer Cumpleaños de Guadita", desc: "Primera vez que dije presente en un cumpleaños de Guadita. HDP ME MANDASTE CON TODA TU FLIA, claramente no queria ajajajaaj", media: "img/etapa4.jpeg" },
   { date: "24/05/2025", title: "Primer dia de novios?", desc: "Que mas puedo decir de ese dia. QUE LINDO ES SER TU NOVIO GUADALUPE", media: "img/imagen 7.jpeg" },
   { date: "28/06/2025", title: "Nuestra primera vez?", desc: "Que duro q estuvo hacerla entrar", media: "img/etapa6.jpeg" },
   { date: "ACTUALIDAD", title: "Nososotros en la actualidad", desc: "TE amo para ahora y siempre", media: "img/Imagen13.jpeg" },
 ];
 
 const GALLERY = [
-  { src: "img/Imagen4.jpeg", title: "LUBBEn ", caption: "Un momento lindo." },
+  { src: "img/Imagen4.jpeg", title: "LUBBEN ", caption: "Un momento lindo." },
   { src: "img/Imagen5.jpeg", title: "Nuestra foto mas tierna", caption: "Otra foto especial." },
   { src: "img/Imagen8.jpeg", title: "Cutes y Matcheados", caption: "Una sonrisa que guardo." },
   { src: "img/Imagen12.jpeg", title: "que tiernis", caption: "Nosotros." },
