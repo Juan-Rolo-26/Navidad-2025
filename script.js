@@ -41,6 +41,10 @@ const GALLERY = [
   { src: "img/WhatsApp Image 2025-12-13 at 5.06.57 PM.jpeg", title: "Recuerdo 6", caption: "Un día especial." },
   { src: "img/etapa5.jpeg", title: "Recuerdo 7", caption: "Otra aventura." },
   { src: "img/etapa7.jpeg", title: "Recuerdo 8", caption: "Un momento hermoso." },
+  { src: "img/imagen43.jpeg", title: "Recuerdo 9", caption: "Un momento más." },
+  { src: "img/imagen56.jpeg", title: "Recuerdo 10", caption: "Otro recuerdo." },
+  { src: "img/imagen72.jpeg", title: "Recuerdo 11", caption: "Siempre juntos." },
+  { src: "img/Pensamientos.webp", title: "Pensamientos", caption: "Nuestra canción." },
 ];
 
 const DEDICATIONS = [
