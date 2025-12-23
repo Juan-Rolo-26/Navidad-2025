@@ -217,7 +217,7 @@ body::after{
   z-index:40;
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:center;
   gap:12px;
   padding: 12px 14px;
   background: linear-gradient(180deg, rgba(255,246,247,.78), rgba(255,246,247,0));
@@ -239,7 +239,7 @@ body::after{
 .hud-btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.90); }
 
 .hud-center{
-  flex: 1;
+  flex: 0 1 auto;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -1114,9 +1114,10 @@ p{ margin:0; color: var(--muted); }
   .goal{ grid-column: span 12; }
 }
 @media (max-width: 560px){
-  .hud-center{ display:none; }
+  .hud-center{ display:flex; }
+  .hud-pill, .progress{ display:none; }
   .hud-player{ padding: 6px 8px; }
-  .hud-player__meta{ display:none; }
+  .hud-player__title{ max-width: 160px; font-size: .8rem; }
   .hero__photo{ width: 74px; height: 74px; }
   .hero__card{ padding: 22px 18px; }
   .gitem{ grid-column: span 12; }

@@ -5,16 +5,22 @@ const $$ = (q, el=document) => [...el.querySelectorAll(q)];
    EDITÁ TODO ACÁ
    ========================= */
 const CONFIG = {
-  heroTitle: "Para vos, mi amor 🎄❤️",
+  heroTitle: "Para la persona más especial de mi vida",
   heroSubtitle: "Quería regalarte algo distinto… hecho por mí, con todo lo que siento por vos.",
   relationshipStart: "2025-02-13T00:00:00-03:00",
   datingStart: "2025-05-24T00:00:00-03:00",
   videoUnlockWord: "pana",
   videoUnlockStorageKey: "navidad_video_unlocked",
+  rememberVideoUnlock: false,
   video: {
     youtubeId: "dQw4w9WgXcQ" // <-- CAMBIAR (ID de YouTube)
   }
 };
+
+const MUSIC_VOLUME = 0.85;
+const MUSIC_DUCK_VOLUME = 0.25;
+let videoDuckObserver = null;
+let visibleVideoTargets = new Set();
 
 const TIMELINE = [
   { date: "13/02/2025", title: "Etapa 1", desc: "Nos conocimos y empezó todo.", media: "img/etapa1.mp4" },
@@ -27,10 +33,14 @@ const TIMELINE = [
 ];
 
 const GALLERY = [
-  { src: "img/g1.jpg", title: "Nosotros", caption: "Un pie de foto tierno." },
-  { src: "img/g2.jpg", title: "Ese día", caption: "Otro mini recuerdo." },
-  { src: "img/g3.jpg", title: "Tu sonrisa", caption: "La mejor del mundo." },
-  { src: "img/g4.jpg", title: "Momento", caption: "Que no olvido." },
+  { src: "img/Imagen4.jpeg", title: "Recuerdo 1", caption: "Un momento lindo." },
+  { src: "img/Imagen5.jpeg", title: "Recuerdo 2", caption: "Otra foto especial." },
+  { src: "img/Imagen8.jpeg", title: "Recuerdo 3", caption: "Una sonrisa que guardo." },
+  { src: "img/imagen11.jpeg", title: "Recuerdo 4", caption: "Mi lugar favorito." },
+  { src: "img/Imagen12.jpeg", title: "Recuerdo 5", caption: "Nosotros." },
+  { src: "img/WhatsApp Image 2025-12-13 at 5.06.57 PM.jpeg", title: "Recuerdo 6", caption: "Un día especial." },
+  { src: "img/etapa5.jpeg", title: "Recuerdo 7", caption: "Otra aventura." },
+  { src: "img/etapa7.jpeg", title: "Recuerdo 8", caption: "Un momento hermoso." },
 ];
 
 const DEDICATIONS = [
@@ -141,6 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
   buildTimeline();
   buildGallery();
   initVideoGate();
+  setupVideoDuck();
   initCounter();
 
   initCarousel("ded");
@@ -239,6 +250,38 @@ function smoothGoTo(selector){
   if (!el) return;
   if (el.hasAttribute("hidden")) return;
   el.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+function setupVideoDuck(){
+  const targets = [...$$("video")];
+  if (videoEmbed) targets.push(videoEmbed);
+
+  if (videoDuckObserver) videoDuckObserver.disconnect();
+  visibleVideoTargets = new Set();
+
+  videoDuckObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) visibleVideoTargets.add(entry.target);
+      else visibleVideoTargets.delete(entry.target);
+    });
+    updateVideoDuck();
+  }, { threshold: 0.4 });
+
+  targets.forEach((el) => videoDuckObserver.observe(el));
+  updateVideoDuck();
+}
+
+function shouldDuckForVideo(){
+  return [...visibleVideoTargets].some((el) => {
+    if (el === videoEmbed && videoEmbed.classList.contains("video--locked")) return false;
+    return true;
+  });
+}
+
+function updateVideoDuck(){
+  const shouldDuck = shouldDuckForVideo();
+  if (!musicOn) return;
+  setMusicVolume(shouldDuck ? MUSIC_DUCK_VOLUME : MUSIC_VOLUME);
 }
 
 function setupScrollLock(){
@@ -435,10 +478,7 @@ function buildVideo(){
       allowfullscreen
     ></iframe>
   `;
-
-  // bajar música cuando está encima del video
-  videoEmbed.addEventListener("mouseenter", () => setMusicVolume(.25));
-  videoEmbed.addEventListener("mouseleave", () => setMusicVolume(.85));
+  updateVideoDuck();
 }
 
 /* =========================
@@ -446,7 +486,8 @@ function buildVideo(){
    palabra: "pana" (case-insensitive)
    ========================= */
 function initVideoGate(){
-  const unlocked = localStorage.getItem(CONFIG.videoUnlockStorageKey) === "1";
+  const unlocked = CONFIG.rememberVideoUnlock
+    && localStorage.getItem(CONFIG.videoUnlockStorageKey) === "1";
 
   if (unlocked){
     unlockVideoUI(true);
@@ -460,7 +501,9 @@ function initVideoGate(){
     const target = normalizeWord(CONFIG.videoUnlockWord);
 
     if (guess === target){
-      localStorage.setItem(CONFIG.videoUnlockStorageKey, "1");
+      if (CONFIG.rememberVideoUnlock){
+        localStorage.setItem(CONFIG.videoUnlockStorageKey, "1");
+      }
 
       gateError.textContent = "¡Sii! Desbloqueado 💖";
       gateError.style.color = "rgba(1,17,38,.82)";
@@ -501,8 +544,8 @@ function unlockVideoUI(skipMessage){
   buildVideo();
 
   if (!skipMessage){
-    setMusicVolume(.35);
-    setTimeout(() => setMusicVolume(.85), 2500);
+    setMusicVolume(MUSIC_DUCK_VOLUME);
+    setTimeout(() => updateVideoDuck(), 2500);
   }
 }
 
@@ -719,7 +762,8 @@ function toggleMusic(forceOn=null){
       .then(() => {
         musicOn = true;
         updateMusicUI(true);
-        fadeAudio(bgMusic, 0.0, 0.85, 850);
+        const targetVol = shouldDuckForVideo() ? MUSIC_DUCK_VOLUME : MUSIC_VOLUME;
+        fadeAudio(bgMusic, 0.0, targetVol, 850);
       })
       .catch(() => {
         musicOn = false;
