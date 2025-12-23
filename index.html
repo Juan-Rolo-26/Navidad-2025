@@ -23,13 +23,13 @@
 
   <!-- Audio -->
   <audio id="bgMusic" preload="auto" loop>
-    <source src="assets/music/bg.mp3" type="audio/mpeg">
+    <source src="img/music/Pensamientos - AIRBAG.mp3" type="audio/mpeg">
   </audio>
 
   <!-- HUD -->
   <header class="hud">
     <button class="hud-btn" id="btnScrollTop" title="Arriba">
-      <svg class="icon"><use href="assets/icons/sprite.svg#icon-arrow-up"></use></svg>
+      <svg class="icon"><use href="img/icons/sprite.svg#icon-arrow-up"></use></svg>
     </button>
 
     <div class="hud-center">
@@ -45,12 +45,12 @@
 
     <div class="hud-right">
       <button class="hud-btn hud-music" id="musicBtn" aria-label="Música">
-        <svg class="icon" id="musicIcon"><use href="assets/icons/sprite.svg#icon-music"></use></svg>
+        <svg class="icon" id="musicIcon"><use href="img/icons/sprite.svg#icon-music"></use></svg>
         <span id="musicLabel">Música</span>
       </button>
 
       <button class="hud-btn" id="btnHelp" title="Tips">
-        <svg class="icon"><use href="assets/icons/sprite.svg#icon-sparkle"></use></svg>
+        <svg class="icon"><use href="img/icons/sprite.svg#icon-sparkle"></use></svg>
       </button>
     </div>
   </header>
@@ -74,9 +74,22 @@
 
         <div class="hero__actions">
           <button class="btn btn--primary" id="startBtn">
-            <svg class="icon"><use href="assets/icons/sprite.svg#icon-play"></use></svg>
+            <svg class="icon"><use href="img/icons/sprite.svg#icon-play"></use></svg>
             Empezar ❤️
           </button>
+        </div>
+
+        <div class="music-card" id="musicCard">
+          <button class="music-play" id="heroMusicBtn" aria-label="Reproducir música">
+            <svg class="icon" id="heroMusicIcon"><use href="img/icons/sprite.svg#icon-play"></use></svg>
+          </button>
+          <div class="music-meta">
+            <div class="music-title">Pensamientos — Airbag</div>
+            <div class="music-sub" id="heroMusicSub">Tocá para reproducir</div>
+            <div class="music-bars" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
         </div>
 
         <div class="hero__note">
@@ -86,7 +99,7 @@
       </div>
 
       <div class="scroll-cue" aria-hidden="true">
-        <svg class="icon"><use href="assets/icons/sprite.svg#icon-chevron-down"></use></svg>
+        <svg class="icon"><use href="img/icons/sprite.svg#icon-chevron-down"></use></svg>
       </div>
     </section>
 
@@ -129,13 +142,13 @@
             </div>
             <div class="modal__actions">
               <button class="hud-btn" id="prevPhoto" aria-label="Anterior">
-                <svg class="icon"><use href="assets/icons/sprite.svg#icon-prev"></use></svg>
+                <svg class="icon"><use href="img/icons/sprite.svg#icon-prev"></use></svg>
               </button>
               <button class="hud-btn" id="nextPhoto" aria-label="Siguiente">
-                <svg class="icon"><use href="assets/icons/sprite.svg#icon-next"></use></svg>
+                <svg class="icon"><use href="img/icons/sprite.svg#icon-next"></use></svg>
               </button>
               <button class="hud-btn" data-close="galleryModal" aria-label="Cerrar">
-                <svg class="icon"><use href="assets/icons/sprite.svg#icon-close"></use></svg>
+                <svg class="icon"><use href="img/icons/sprite.svg#icon-close"></use></svg>
               </button>
             </div>
           </div>
@@ -166,7 +179,7 @@
           <!-- Gate del video -->
           <div class="gate" id="videoGate">
             <div class="gate__badge">
-              <svg class="icon"><use href="assets/icons/sprite.svg#icon-lock"></use></svg>
+              <svg class="icon"><use href="img/icons/sprite.svg#icon-lock"></use></svg>
               <span>Video bloqueado</span>
             </div>
 
@@ -187,7 +200,7 @@
               />
               <button class="btn btn--primary" id="gateBtn">
                 Desbloquear ❤️
-                <svg class="icon"><use href="assets/icons/sprite.svg#icon-unlock"></use></svg>
+                <svg class="icon"><use href="img/icons/sprite.svg#icon-unlock"></use></svg>
               </button>
             </div>
 
@@ -250,12 +263,12 @@
 
           <div class="carousel__controls">
             <button class="btn btn--ghost" id="dedPrev">
-              <svg class="icon"><use href="assets/icons/sprite.svg#icon-prev"></use></svg>
+              <svg class="icon"><use href="img/icons/sprite.svg#icon-prev"></use></svg>
               Anterior
             </button>
             <button class="btn btn--primary" id="dedNext">
               Siguiente
-              <svg class="icon"><use href="assets/icons/sprite.svg#icon-next"></use></svg>
+              <svg class="icon"><use href="img/icons/sprite.svg#icon-next"></use></svg>
             </button>
           </div>
 
@@ -281,12 +294,12 @@
 
           <div class="carousel__controls">
             <button class="btn btn--ghost" id="songPrev">
-              <svg class="icon"><use href="assets/icons/sprite.svg#icon-prev"></use></svg>
+              <svg class="icon"><use href="img/icons/sprite.svg#icon-prev"></use></svg>
               Anterior
             </button>
             <button class="btn btn--primary" id="songNext">
               Siguiente
-              <svg class="icon"><use href="assets/icons/sprite.svg#icon-next"></use></svg>
+              <svg class="icon"><use href="img/icons/sprite.svg#icon-next"></use></svg>
             </button>
           </div>
 
@@ -308,7 +321,7 @@
 
         <div class="goals-actions reveal">
           <button class="btn btn--ghost" id="resetGoals">
-            <svg class="icon"><use href="assets/icons/sprite.svg#icon-refresh"></use></svg>
+            <svg class="icon"><use href="img/icons/sprite.svg#icon-refresh"></use></svg>
             Reiniciar checks
           </button>
           <span class="muted">Se guardan en este dispositivo.</span>
@@ -326,11 +339,11 @@
 
           <div class="final-actions">
             <button class="btn btn--primary btn--big" id="btnYes">
-              <svg class="icon"><use href="assets/icons/sprite.svg#icon-heart"></use></svg>
+              <svg class="icon"><use href="img/icons/sprite.svg#icon-heart"></use></svg>
               Sí 💖
             </button>
             <button class="btn btn--ghost btn--big" id="btnObvio">
-              <svg class="icon"><use href="assets/icons/sprite.svg#icon-sparkle"></use></svg>
+              <svg class="icon"><use href="img/icons/sprite.svg#icon-sparkle"></use></svg>
               Obvio ✨
             </button>
           </div>

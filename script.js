@@ -16,17 +16,17 @@ const CONFIG = {
 };
 
 const TIMELINE = [
-  { date: "dd/mm/aaaa", title: "Nos conocimos", desc: "Acá contá un mini recuerdo tierno.", img: "assets/img/t1.jpg" },
-  { date: "dd/mm/aaaa", title: "Primera salida", desc: "Algo que te guste recordar.", img: "assets/img/t2.jpg" },
-  { date: "dd/mm/aaaa", title: "Un día especial", desc: "Un momento que te marcó.", img: "assets/img/t3.jpg" },
-  { date: "Hoy", title: "Esta Navidad", desc: "Y te elijo, hoy también.", img: "assets/img/t4.jpg" },
+  { date: "dd/mm/aaaa", title: "Nos conocimos", desc: "Acá contá un mini recuerdo tierno.", img: "img/t1.jpg" },
+  { date: "dd/mm/aaaa", title: "Primera salida", desc: "Algo que te guste recordar.", img: "img/t2.jpg" },
+  { date: "dd/mm/aaaa", title: "Un día especial", desc: "Un momento que te marcó.", img: "img/t3.jpg" },
+  { date: "Hoy", title: "Esta Navidad", desc: "Y te elijo, hoy también.", img: "img/t4.jpg" },
 ];
 
 const GALLERY = [
-  { src: "assets/img/g1.jpg", title: "Nosotros", caption: "Un pie de foto tierno." },
-  { src: "assets/img/g2.jpg", title: "Ese día", caption: "Otro mini recuerdo." },
-  { src: "assets/img/g3.jpg", title: "Tu sonrisa", caption: "La mejor del mundo." },
-  { src: "assets/img/g4.jpg", title: "Momento", caption: "Que no olvido." },
+  { src: "img/g1.jpg", title: "Nosotros", caption: "Un pie de foto tierno." },
+  { src: "img/g2.jpg", title: "Ese día", caption: "Otro mini recuerdo." },
+  { src: "img/g3.jpg", title: "Tu sonrisa", caption: "La mejor del mundo." },
+  { src: "img/g4.jpg", title: "Momento", caption: "Que no olvido." },
 ];
 
 const DEDICATIONS = [
@@ -60,6 +60,10 @@ const bgMusic = $("#bgMusic");
 const musicBtn = $("#musicBtn");
 const musicLabel = $("#musicLabel");
 const musicIcon = $("#musicIcon");
+const heroMusicBtn = $("#heroMusicBtn");
+const heroMusicIcon = $("#heroMusicIcon");
+const heroMusicSub = $("#heroMusicSub");
+const musicCard = $("#musicCard");
 
 const progressBar = $("#progressBar");
 const btnHelp = $("#btnHelp");
@@ -119,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
   heroSub.textContent = CONFIG.heroSubtitle;
   typeWriter(typeTitle, CONFIG.heroTitle, 30);
 
+  updateMusicUI(false);
   setupStepLock();
   setupReveal();
   setupHUD();
@@ -159,6 +164,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!started) started = true;
     toggleMusic();
   });
+  if (heroMusicBtn){
+    heroMusicBtn.addEventListener("click", () => {
+      if (!started) started = true;
+      toggleMusic();
+    });
+  }
 
   btnScrollTop.addEventListener("click", () => smoothGoTo("#s1"));
   btnHelp.addEventListener("click", () => openModal("helpModal"));
@@ -362,7 +373,7 @@ function openPhoto(i){
     galleryImage.src = ph.src || "";
     galleryImage.onerror = () => {
       galleryImage.removeAttribute("src");
-      galleryImage.alt = "Agregá tu foto en assets/img/";
+      galleryImage.alt = "Agregá tu foto en img/";
     };
   }
 
@@ -564,14 +575,14 @@ function buildGoals(){
 
     card.innerHTML = `
       <div class="gicon">
-        <svg class="icon"><use href="assets/icons/sprite.svg#${g.icon}"></use></svg>
+        <svg class="icon"><use href="img/icons/sprite.svg#${g.icon}"></use></svg>
       </div>
       <div class="gtxt">
         <p class="title">${escapeHtml(g.title)}</p>
         <p class="desc">${escapeHtml(g.desc)}</p>
       </div>
       <div class="check">
-        <svg class="icon"><use href="assets/icons/sprite.svg#icon-check"></use></svg>
+        <svg class="icon"><use href="img/icons/sprite.svg#icon-check"></use></svg>
       </div>
     `;
 
@@ -608,6 +619,20 @@ function setupFinale(){
 /* Music */
 function safePlayMusic(){ toggleMusic(true); }
 
+function updateMusicUI(isOn){
+  if (musicLabel) musicLabel.textContent = isOn ? "Pausar" : "Música";
+  if (musicIcon){
+    const use = musicIcon.querySelector("use");
+    if (use) use.setAttribute("href", `img/icons/sprite.svg#icon-${isOn ? "pause" : "music"}`);
+  }
+  if (heroMusicSub) heroMusicSub.textContent = isOn ? "Reproduciendo" : "Tocá para reproducir";
+  if (heroMusicIcon){
+    const use = heroMusicIcon.querySelector("use");
+    if (use) use.setAttribute("href", `img/icons/sprite.svg#icon-${isOn ? "pause" : "play"}`);
+  }
+  if (musicCard) musicCard.classList.toggle("is-playing", isOn);
+}
+
 function toggleMusic(forceOn=null){
   const wantOn = forceOn === null ? !musicOn : forceOn;
 
@@ -616,20 +641,16 @@ function toggleMusic(forceOn=null){
     bgMusic.play()
       .then(() => {
         musicOn = true;
-        musicLabel.textContent = "Pausar";
-        const use = musicIcon.querySelector("use");
-        if (use) use.setAttribute("href", "assets/icons/sprite.svg#icon-pause");
+        updateMusicUI(true);
         fadeAudio(bgMusic, 0.0, 0.85, 850);
       })
       .catch(() => {
         musicOn = false;
-        musicLabel.textContent = "Música";
+        updateMusicUI(false);
       });
   } else {
     musicOn = false;
-    musicLabel.textContent = "Música";
-    const use = musicIcon.querySelector("use");
-    if (use) use.setAttribute("href", "assets/icons/sprite.svg#icon-music");
+    updateMusicUI(false);
     fadeAudio(bgMusic, bgMusic.volume, 0.0, 450, () => bgMusic.pause());
   }
 }
