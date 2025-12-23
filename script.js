@@ -17,10 +17,13 @@ const CONFIG = {
 };
 
 const TIMELINE = [
-  { date: "dd/mm/aaaa", title: "Nos conocimos", desc: "Acá contá un mini recuerdo tierno.", img: "img/t1.jpg" },
-  { date: "dd/mm/aaaa", title: "Primera salida", desc: "Algo que te guste recordar.", img: "img/t2.jpg" },
-  { date: "dd/mm/aaaa", title: "Un día especial", desc: "Un momento que te marcó.", img: "img/t3.jpg" },
-  { date: "Hoy", title: "Esta Navidad", desc: "Y te elijo, hoy también.", img: "img/t4.jpg" },
+  { date: "Etapa 1", title: "Recuerdo 1", desc: "", media: "img/etapa1.mp4" },
+  { date: "Etapa 2", title: "Recuerdo 2", desc: "", media: "img/etapa2.jpeg" },
+  { date: "Etapa 3", title: "Recuerdo 3", desc: "", media: "img/etapa3.mp4" },
+  { date: "Etapa 4", title: "Recuerdo 4", desc: "", media: "img/etapa4.jpeg" },
+  { date: "Etapa 5", title: "Recuerdo 5", desc: "", media: "img/imagen 7.jpeg" },
+  { date: "Etapa 6", title: "Recuerdo 6", desc: "", media: "img/etapa6.jpeg" },
+  { date: "Etapa 7", title: "Recuerdo 7", desc: "", media: "img/Imagen13.jpeg" },
 ];
 
 const GALLERY = [
@@ -340,14 +343,26 @@ function buildTimeline(){
 
     const card = document.createElement("div");
     card.className = "tcard";
-    card.innerHTML = `
-      <div class="tdate">${escapeHtml(item.date)}</div>
-      <div class="ttitle">${escapeHtml(item.title)}</div>
-      <p class="tdesc">${escapeHtml(item.desc)}</p>
-      <div class="timg">
-        <img src="${item.img}" alt="${escapeHtml(item.title)}"
+    const mediaSrc = item.media || item.img || "";
+    const isVideo = /\.(mp4|webm|ogg)$/i.test(mediaSrc);
+    const safeTitle = escapeHtml(item.title);
+    const safeDate = escapeHtml(item.date);
+    const safeDesc = escapeHtml(item.desc);
+
+    const mediaHtml = isVideo
+      ? `<video src="${mediaSrc}" muted loop autoplay playsinline></video>`
+      : `
+        <img src="${mediaSrc}" alt="${safeTitle}"
           onerror="this.style.display='none'; this.parentElement.style.background='rgba(1,17,38,.06)';"
         />
+      `;
+
+    card.innerHTML = `
+      ${item.date ? `<div class="tdate">${safeDate}</div>` : ""}
+      ${item.title ? `<div class="ttitle">${safeTitle}</div>` : ""}
+      ${item.desc ? `<p class="tdesc">${safeDesc}</p>` : ""}
+      <div class="timg">
+        ${mediaHtml}
       </div>
     `;
     wrap.appendChild(card);
