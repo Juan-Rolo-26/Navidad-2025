@@ -7,7 +7,8 @@ const $$ = (q, el=document) => [...el.querySelectorAll(q)];
 const CONFIG = {
   heroTitle: "Para vos, mi amor 🎄❤️",
   heroSubtitle: "Quería regalarte algo distinto… hecho por mí, con todo lo que siento por vos.",
-  relationshipStart: "2024-01-01T00:00:00-03:00", // <-- CAMBIÁ ESTA FECHA
+  relationshipStart: "2025-02-13T00:00:00-03:00",
+  datingStart: "2025-05-24T00:00:00-03:00",
   videoUnlockWord: "pana",
   videoUnlockStorageKey: "navidad_video_unlocked",
   video: {
@@ -85,9 +86,12 @@ const gateBtn = $("#gateBtn");
 const gateError = $("#gateError");
 const gateHint = $("#gateHint");
 
-const daysCount = $("#daysCount");
-const sinceDate = $("#sinceDate");
-const timeBreakdown = $("#timeBreakdown");
+const daysCountMet = $("#daysCountMet");
+const sinceDateMet = $("#sinceDateMet");
+const timeBreakdownMet = $("#timeBreakdownMet");
+const daysCountDating = $("#daysCountDating");
+const sinceDateDating = $("#sinceDateDating");
+const timeBreakdownDating = $("#timeBreakdownDating");
 
 const dedicationText = $("#dedicationText");
 const dedicationMeta = $("#dedicationMeta");
@@ -125,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateMusicUI(false);
   setupStepLock();
+  setupStepButtons();
   setupReveal();
   setupHUD();
   setupModals();
@@ -145,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setupSnow();
   setupConfetti();
+  attemptAutoplay();
 
   startBtn.addEventListener("click", () => {
     started = true;
@@ -241,30 +247,37 @@ function setupStepLock(){
     if (idx > 0) setSectionLocked(section, true);
   });
   setFooterLocked(true);
+}
 
-  window.addEventListener("scroll", handleStepProgress, { passive:true });
-  window.addEventListener("resize", handleStepProgress);
+function setupStepButtons(){
+  const buttons = $$(".section-next");
+  if (!buttons.length) return;
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (!stepsEnabled) stepsEnabled = true;
+      const target = btn.dataset.next;
+      if (target) unlockTo(target);
+      else unlockNextStep();
+      if (target) smoothGoTo(target);
+    });
+  });
+}
+
+function unlockTo(selector){
+  const target = $(selector);
+  if (!target) return;
+  const idx = stepSections.indexOf(target);
+  if (idx === -1) return;
+  while (maxUnlockedIndex < idx){
+    unlockNextStep();
+  }
 }
 
 function enableStepUnlock(){
   if (stepsEnabled) return;
   stepsEnabled = true;
   unlockNextStep();
-}
-
-function handleStepProgress(){
-  if (!stepsEnabled) return;
-  if (maxUnlockedIndex >= stepSections.length - 1) return;
-
-  const current = stepSections[maxUnlockedIndex];
-  if (!current) return;
-
-  const unlockOffset = 80;
-  const currentBottom = current.offsetTop + current.offsetHeight;
-  const viewBottom = window.scrollY + window.innerHeight;
-  if (viewBottom >= currentBottom - unlockOffset){
-    unlockNextStep();
-  }
 }
 
 function unlockNextStep(){
@@ -473,19 +486,43 @@ function normalizeWord(s){
 
 /* Counter */
 function initCounter(){
-  const start = new Date(CONFIG.relationshipStart);
-  if (sinceDate) sinceDate.textContent = fmtDate(start);
+  const counters = [
+    {
+      start: new Date(CONFIG.relationshipStart),
+      daysEl: daysCountMet,
+      sinceEl: sinceDateMet,
+      timeEl: timeBreakdownMet
+    },
+    {
+      start: new Date(CONFIG.datingStart),
+      daysEl: daysCountDating,
+      sinceEl: sinceDateDating,
+      timeEl: timeBreakdownDating
+    }
+  ];
+
+  counters.forEach((c) => {
+    if (c.sinceEl) c.sinceEl.textContent = fmtDate(c.start);
+  });
 
   const tick = () => {
     const now = new Date();
-    const diff = now - start;
 
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff / (1000*60*60)) % 24);
-    const mins = Math.floor((diff / (1000*60)) % 60);
+    counters.forEach((c) => {
+      if (!c.start) return;
+      const diff = Math.max(0, now - c.start);
+      const days = Math.floor(diff / (1000*60*60*24));
+      const totalHours = Math.floor(diff / (1000*60*60));
+      const mins = Math.floor((diff / (1000*60)) % 60);
+      const hoursLabel = totalHours === 1 ? "hora" : "horas";
+      const minsLabel = mins === 1 ? "minuto" : "minutos";
 
-    if (daysCount) animateNumber(daysCount, days, 650);
-    if (timeBreakdown) timeBreakdown.textContent = `${hours}h ${mins}m`;
+      if (c.daysEl) animateNumber(c.daysEl, days, 650);
+      if (c.timeEl){
+        const minsText = mins > 0 ? ` ${mins} ${minsLabel}` : "";
+        c.timeEl.textContent = `${totalHours.toLocaleString("es-AR")} ${hoursLabel}${minsText}`;
+      }
+    });
 
     requestAnimationFrame(() => setTimeout(tick, 1200));
   };
@@ -617,7 +654,20 @@ function setupFinale(){
 }
 
 /* Music */
-function safePlayMusic(){ toggleMusic(true); }
+function safePlayMusic(){
+  if (musicOn) return;
+  toggleMusic(true);
+}
+
+function attemptAutoplay(){
+  if (!bgMusic) return;
+  safePlayMusic();
+  const resume = () => {
+    if (!musicOn) safePlayMusic();
+  };
+  window.addEventListener("pointerdown", resume, { once: true });
+  window.addEventListener("keydown", resume, { once: true });
+}
 
 function updateMusicUI(isOn){
   if (musicLabel) musicLabel.textContent = isOn ? "Pausar" : "Música";

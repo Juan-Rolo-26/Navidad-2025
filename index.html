@@ -79,19 +79,6 @@
           </button>
         </div>
 
-        <div class="music-card" id="musicCard">
-          <button class="music-play" id="heroMusicBtn" aria-label="Reproducir música">
-            <svg class="icon" id="heroMusicIcon"><use href="img/icons/sprite.svg#icon-play"></use></svg>
-          </button>
-          <div class="music-meta">
-            <div class="music-title">Pensamientos — Airbag</div>
-            <div class="music-sub" id="heroMusicSub">Tocá para reproducir</div>
-            <div class="music-bars" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-          </div>
-        </div>
-
         <div class="hero__note">
           <span class="mini-badge">TIP</span>
           Tocá <b>Empezar</b> para empezar con el recorrido
@@ -116,6 +103,13 @@
           <div class="timeline__rail" aria-hidden="true"></div>
           <div class="timeline__items" id="timelineItems"></div>
         </div>
+
+        <div class="section-actions reveal">
+          <button class="btn btn--primary section-next" data-next="#s3">
+            Siguiente
+            <svg class="icon"><use href="img/icons/sprite.svg#icon-chevron-down"></use></svg>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -129,6 +123,13 @@
         </header>
 
         <div class="gallery reveal" id="galleryGrid"></div>
+
+        <div class="section-actions reveal">
+          <button class="btn btn--primary section-next" data-next="#s4">
+            Siguiente
+            <svg class="icon"><use href="img/icons/sprite.svg#icon-chevron-down"></use></svg>
+          </button>
+        </div>
       </div>
 
       <!-- Gallery Modal -->
@@ -215,6 +216,13 @@
             Después del video… seguí bajando 
           </div>
         </div>
+
+        <div class="section-actions reveal">
+          <button class="btn btn--primary section-next" data-next="#s5">
+            Siguiente
+            <svg class="icon"><use href="img/icons/sprite.svg#icon-chevron-down"></use></svg>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -223,26 +231,55 @@
       <div class="wrap">
         <header class="sec-head reveal">
           <p class="sec-kicker">Tiempo juntos</p>
-          <h2>Contador de días desde que nos conocemos</h2>
-          <p>Porque cada día con vos cuenta y mucho.</p>
+          <h2>Contadores de nuestra historia</h2>
+          <p>Desde que nos conocimos y desde que somos novios.</p>
         </header>
 
-        <div class="counter reveal">
-          <div class="counter__big">
-            <span id="daysCount">0</span>
-            <span class="counter__unit">días</span>
+        <div class="counter-grid">
+          <div class="counter reveal">
+            <div class="counter__label">Desde que nos conocemos</div>
+            <div class="counter__big">
+              <span class="counter__value" id="daysCountMet">0</span>
+              <span class="counter__unit">días</span>
+            </div>
+
+            <div class="counter__row">
+              <div class="pill">
+                <span class="pill__label">y también:</span>
+                <span class="pill__value" id="timeBreakdownMet">0 horas</span>
+              </div>
+              <div class="pill">
+                <span class="pill__label">desde:</span>
+                <span class="pill__value" id="sinceDateMet">13/02/2025</span>
+              </div>
+            </div>
           </div>
 
-          <div class="counter__row">
-            <div class="pill">
-              <span class="pill__label">y también:</span>
-              <span class="pill__value" id="timeBreakdown">11h 30m</span>
+          <div class="counter reveal">
+            <div class="counter__label">Desde que somos novios</div>
+            <div class="counter__big">
+              <span class="counter__value" id="daysCountDating">0</span>
+              <span class="counter__unit">días</span>
             </div>
-            <div class="pill">
-              <span class="pill__label">desde:</span>
-              <span class="pill__value" id="sinceDate">13/01/2024</span>
+
+            <div class="counter__row">
+              <div class="pill">
+                <span class="pill__label">y también:</span>
+                <span class="pill__value" id="timeBreakdownDating">0 horas</span>
+              </div>
+              <div class="pill">
+                <span class="pill__label">desde:</span>
+                <span class="pill__value" id="sinceDateDating">24/05/2025</span>
+              </div>
             </div>
           </div>
+        </div>
+
+        <div class="section-actions reveal">
+          <button class="btn btn--primary section-next" data-next="#s6">
+            Siguiente
+            <svg class="icon"><use href="img/icons/sprite.svg#icon-chevron-down"></use></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -273,6 +310,13 @@
           </div>
 
           <div class="dots" id="dedDots"></div>
+        </div>
+
+        <div class="section-actions reveal">
+          <button class="btn btn--primary section-next" data-next="#s7">
+            Siguiente
+            <svg class="icon"><use href="img/icons/sprite.svg#icon-chevron-down"></use></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -305,6 +349,13 @@
 
           <div class="dots" id="songDots"></div>
         </div>
+
+        <div class="section-actions reveal">
+          <button class="btn btn--primary section-next" data-next="#s8">
+            Siguiente
+            <svg class="icon"><use href="img/icons/sprite.svg#icon-chevron-down"></use></svg>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -325,6 +376,13 @@
             Reiniciar checks
           </button>
           <span class="muted">Se guardan en este dispositivo.</span>
+        </div>
+
+        <div class="section-actions reveal">
+          <button class="btn btn--primary section-next" data-next="#s9">
+            Siguiente
+            <svg class="icon"><use href="img/icons/sprite.svg#icon-chevron-down"></use></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -355,7 +413,7 @@
 
     <footer class="footer">
       <div class="footer__inner">
-        <span>Te amo miamor sos el amor de mi vida nunca lo dudes. Feliz  Navidad</span>
+        <span>Te amo miamor sos el amor de mi vida nunca lo dudes. Feliz  Navidad y año nuevo</span>
         <span class="muted">❤️</span>
       </div>
     </footer>

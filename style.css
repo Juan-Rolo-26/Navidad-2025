@@ -321,6 +321,15 @@ h2{
 p{ margin:0; color: var(--muted); }
 .muted{ color: var(--muted); }
 
+.section-actions{
+  margin-top: 22px;
+  display:flex;
+  justify-content:center;
+}
+.section-next{
+  min-width: 180px;
+}
+
 /* Reveal */
 .reveal{
   opacity:0;
@@ -416,31 +425,31 @@ p{ margin:0; color: var(--muted); }
 
 .music-card{
   position:relative; z-index:1;
-  margin-top: 14px;
+  margin: 0 0 16px;
   width: min(520px, 100%);
   display:flex;
   align-items:center;
   gap:14px;
-  padding: 12px 14px;
-  border-radius: 16px;
-  background: rgba(255,255,255,.78);
-  border:1px solid rgba(1,17,38,.12);
-  box-shadow: var(--shadow2);
+  padding: 10px 16px 10px 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(242,171,109,.30), rgba(242,132,92,.28), rgba(242,75,89,.24));
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow: 0 14px 30px rgba(242,75,89,.14);
   backdrop-filter: var(--blur);
 }
 .music-play{
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
-  border:1px solid rgba(1,17,38,.10);
-  background: linear-gradient(135deg, rgba(242,171,109,.22), rgba(242,75,89,.16));
+  border:1px solid rgba(255,255,255,.92);
+  background: rgba(255,255,255,.92);
   display:flex;
   align-items:center;
   justify-content:center;
   color: rgba(1,17,38,.85);
   cursor:pointer;
   transition: transform .18s var(--ease), box-shadow .2s var(--ease);
-  box-shadow: 0 10px 24px rgba(242,75,89,.12);
+  box-shadow: 0 10px 22px rgba(242,75,89,.16);
 }
 .music-play:hover{ transform: translateY(-1px) scale(1.02); }
 .music-play:active{ transform: translateY(0) scale(.98); }
@@ -680,6 +689,11 @@ p{ margin:0; color: var(--muted); }
 /* =========================
    COUNTER
    ========================= */
+.counter-grid{
+  display:grid;
+  gap:20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
 .counter{
   border-radius: var(--r);
   background: var(--card);
@@ -699,6 +713,18 @@ p{ margin:0; color: var(--muted); }
   opacity:.85;
   pointer-events:none;
 }
+.counter__label{
+  position:relative; z-index:1;
+  display:inline-flex;
+  align-items:center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.78);
+  border:1px solid rgba(1,17,38,.10);
+  box-shadow: var(--shadow2);
+  font-weight: 900;
+  margin-bottom: 14px;
+}
 .counter__big{
   position:relative; z-index:1;
   display:flex;
@@ -708,7 +734,7 @@ p{ margin:0; color: var(--muted); }
   letter-spacing: -1px;
   font-size: clamp(3rem, 6vw, 5rem);
 }
-.counter__big #daysCount{
+.counter__value{
   background: linear-gradient(90deg, var(--peach), var(--coral), var(--pink));
   -webkit-background-clip:text;
   background-clip:text;
