@@ -65,8 +65,12 @@ const DEDICATIONS = [
 ];
 
 const SONG_QUOTES = [
-  { text: "“[Tu frase de canción acá]”", meta: "Canción — Artista" },
-  { text: "“[Tu frase de canción acá]”", meta: "Canción — Artista" },
+  { text: "“Y no sé cómo explicarte que te necesito.”", meta: "Deshoras — Babasónicos" },
+  { text: "“y no te imaginas, lo que haces sentir en mi”", meta: "No te imaginas — No Te Va a Gustar" },
+  { text: "“Nunca voy a olvidarte.”", meta: "Crimen — Gustavo Cerati" },
+  { text: "“No hay nadie más.”", meta: "Sin documentos — Los Rodríguez" },
+  { text: "“Me gustan tus ojos tu intensidad”", meta: "Me gusta — Ciro y Los Persas" },
+  { text: "“Nada de esto fue un error”", meta: "Nada fue un error — Andrés Calamaro" },
 ];
 
 const GOALS_2026 = [
