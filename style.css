@@ -697,14 +697,14 @@ p{ margin:0; color: var(--muted); }
 
 .timg{
   margin-top: 12px;
-  height: 170px;
+  height: clamp(210px, 32vw, 280px);
   border-radius: 18px;
-  background: rgba(1,17,38,.06);
+  background: rgba(255,255,255,.6);
   border:1px solid rgba(1,17,38,.10);
   overflow:hidden;
 }
-.timg img{ width:100%; height:100%; object-fit:cover; display:block; opacity:.96; }
-.timg video{ width:100%; height:100%; object-fit:cover; display:block; }
+.timg img{ width:100%; height:100%; object-fit:contain; display:block; opacity:.98; }
+.timg video{ width:100%; height:100%; object-fit:contain; display:block; }
 
 .titem.right .tcard{ grid-column: 3 / 4; }
 .titem.left .tcard{ grid-column: 1 / 2; }

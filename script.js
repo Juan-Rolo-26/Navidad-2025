@@ -17,13 +17,13 @@ const CONFIG = {
 };
 
 const TIMELINE = [
-  { date: "Etapa 1", title: "Recuerdo 1", desc: "", media: "img/etapa1.mp4" },
-  { date: "Etapa 2", title: "Recuerdo 2", desc: "", media: "img/etapa2.jpeg" },
-  { date: "Etapa 3", title: "Recuerdo 3", desc: "", media: "img/etapa3.mp4" },
-  { date: "Etapa 4", title: "Recuerdo 4", desc: "", media: "img/etapa4.jpeg" },
-  { date: "Etapa 5", title: "Recuerdo 5", desc: "", media: "img/imagen 7.jpeg" },
-  { date: "Etapa 6", title: "Recuerdo 6", desc: "", media: "img/etapa6.jpeg" },
-  { date: "Etapa 7", title: "Recuerdo 7", desc: "", media: "img/Imagen13.jpeg" },
+  { date: "13/02/2025", title: "Etapa 1", desc: "Nos conocimos y empezó todo.", media: "img/etapa1.mp4" },
+  { date: "24/05/2025", title: "Etapa 2", desc: "Empezamos oficialmente como novios.", media: "img/etapa2.jpeg" },
+  { date: "dd/mm/aaaa", title: "Etapa 3", desc: "Un momento que quiero guardar para siempre.", media: "img/etapa3.mp4" },
+  { date: "dd/mm/aaaa", title: "Etapa 4", desc: "Un día especial para nosotros.", media: "img/etapa4.jpeg" },
+  { date: "dd/mm/aaaa", title: "Etapa 5", desc: "Otra aventura juntos.", media: "img/imagen 7.jpeg" },
+  { date: "dd/mm/aaaa", title: "Etapa 6", desc: "Una sonrisa que me quedó grabada.", media: "img/etapa6.jpeg" },
+  { date: "dd/mm/aaaa", title: "Etapa 7", desc: "Un recuerdo que atesoro.", media: "img/Imagen13.jpeg" },
 ];
 
 const GALLERY = [
@@ -132,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateMusicUI(false);
   setupStepLock();
+  setupScrollLock();
   setupStepButtons();
   setupReveal();
   setupHUD();
@@ -180,8 +181,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  btnScrollTop.addEventListener("click", () => smoothGoTo("#s1"));
-  btnHelp.addEventListener("click", () => openModal("helpModal"));
+  if (btnScrollTop) btnScrollTop.addEventListener("click", () => smoothGoTo("#s1"));
+  if (btnHelp) btnHelp.addEventListener("click", () => openModal("helpModal"));
 
   prevPhoto.addEventListener("click", () => openPhoto(galleryIndex - 1));
   nextPhoto.addEventListener("click", () => openPhoto(galleryIndex + 1));
@@ -240,6 +241,19 @@ function smoothGoTo(selector){
   el.scrollIntoView({ behavior:"smooth", block:"start" });
 }
 
+function setupScrollLock(){
+  window.addEventListener("scroll", enforceScrollLimit, { passive:true });
+  window.addEventListener("resize", enforceScrollLimit);
+  enforceScrollLimit();
+}
+
+function enforceScrollLimit(){
+  const current = stepSections[maxUnlockedIndex] || stepSections[0];
+  if (!current) return;
+  const maxScroll = Math.max(0, current.offsetTop + current.offsetHeight - window.innerHeight);
+  if (window.scrollY > maxScroll) window.scrollTo({ top: maxScroll, behavior:"auto" });
+}
+
 /* Step lock */
 function setupStepLock(){
   stepSections = $$(".section");
@@ -289,6 +303,7 @@ function unlockNextStep(){
   setSectionLocked(stepSections[maxUnlockedIndex], false);
   if (maxUnlockedIndex >= stepSections.length - 1) setFooterLocked(false);
   updateProgress();
+  enforceScrollLimit();
 }
 
 function setSectionLocked(section, locked){
