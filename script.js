@@ -512,15 +512,12 @@ function initCounter(){
       if (!c.start) return;
       const diff = Math.max(0, now - c.start);
       const days = Math.floor(diff / (1000*60*60*24));
-      const totalHours = Math.floor(diff / (1000*60*60));
-      const mins = Math.floor((diff / (1000*60)) % 60);
-      const hoursLabel = totalHours === 1 ? "hora" : "horas";
-      const minsLabel = mins === 1 ? "minuto" : "minutos";
+      const hours = Math.floor((diff / (1000*60*60)) % 24);
+      const hoursLabel = hours === 1 ? "hora" : "horas";
 
       if (c.daysEl) animateNumber(c.daysEl, days, 650);
       if (c.timeEl){
-        const minsText = mins > 0 ? ` ${mins} ${minsLabel}` : "";
-        c.timeEl.textContent = `${totalHours.toLocaleString("es-AR")} ${hoursLabel}${minsText}`;
+        c.timeEl.textContent = `${hours} ${hoursLabel}`;
       }
     });
 
@@ -670,10 +667,10 @@ function attemptAutoplay(){
 }
 
 function updateMusicUI(isOn){
-  if (musicLabel) musicLabel.textContent = isOn ? "Pausar" : "Música";
+  if (musicLabel) musicLabel.textContent = isOn ? "Reproduciendo" : "Pausado";
   if (musicIcon){
     const use = musicIcon.querySelector("use");
-    if (use) use.setAttribute("href", `img/icons/sprite.svg#icon-${isOn ? "pause" : "music"}`);
+    if (use) use.setAttribute("href", `img/icons/sprite.svg#icon-${isOn ? "pause" : "play"}`);
   }
   if (heroMusicSub) heroMusicSub.textContent = isOn ? "Reproduciendo" : "Tocá para reproducir";
   if (heroMusicIcon){

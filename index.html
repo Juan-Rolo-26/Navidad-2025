@@ -44,10 +44,23 @@
     </div>
 
     <div class="hud-right">
-      <button class="hud-btn hud-music" id="musicBtn" aria-label="Música">
-        <svg class="icon" id="musicIcon"><use href="img/icons/sprite.svg#icon-music"></use></svg>
-        <span id="musicLabel">Música</span>
-      </button>
+      <div class="hud-player" aria-label="Reproductor de música">
+        <div class="hud-player__avatar">
+          <img src="img/Imagen12.jpeg" alt="Nosotros">
+        </div>
+        <div class="hud-player__meta">
+          <div class="hud-player__title">Pensamientos — Airbag</div>
+          <div class="hud-player__sub">
+            <span class="hud-player__cover">
+              <img src="img/Pensamientos.webp" alt="Pensamientos">
+            </span>
+            <span class="hud-player__status" id="musicLabel">Pausado</span>
+          </div>
+        </div>
+        <button class="hud-player__btn" id="musicBtn" aria-label="Reproducir o pausar">
+          <svg class="icon" id="musicIcon"><use href="img/icons/sprite.svg#icon-play"></use></svg>
+        </button>
+      </div>
 
       <button class="hud-btn" id="btnHelp" title="Tips">
         <svg class="icon"><use href="img/icons/sprite.svg#icon-sparkle"></use></svg>
@@ -245,7 +258,7 @@
 
             <div class="counter__row">
               <div class="pill">
-                <span class="pill__label">y también:</span>
+                <span class="pill__label">horas de más:</span>
                 <span class="pill__value" id="timeBreakdownMet">0 horas</span>
               </div>
               <div class="pill">
@@ -264,7 +277,7 @@
 
             <div class="counter__row">
               <div class="pill">
-                <span class="pill__label">y también:</span>
+                <span class="pill__label">horas de más:</span>
                 <span class="pill__value" id="timeBreakdownDating">0 horas</span>
               </div>
               <div class="pill">
