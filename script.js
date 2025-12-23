@@ -13,7 +13,8 @@ const CONFIG = {
   videoUnlockStorageKey: "navidad_video_unlocked",
   rememberVideoUnlock: false,
   video: {
-    youtubeId: "dQw4w9WgXcQ" // <-- CAMBIAR (ID de YouTube)
+    driveId: "1UHMImK6G-7XE0UWDGSSe7MZuQn06c8NY",
+    youtubeId: "" // <-- opcional
   }
 };
 
@@ -23,35 +24,44 @@ let videoDuckObserver = null;
 let visibleVideoTargets = new Set();
 
 const TIMELINE = [
-  { date: "13/02/2025", title: "Etapa 1", desc: "Nos conocimos y empezó todo.", media: "img/etapa1.mp4" },
-  { date: "24/05/2025", title: "Etapa 2", desc: "Empezamos oficialmente como novios.", media: "img/etapa2.jpeg" },
-  { date: "dd/mm/aaaa", title: "Etapa 3", desc: "Un momento que quiero guardar para siempre.", media: "img/etapa3.mp4" },
-  { date: "dd/mm/aaaa", title: "Etapa 4", desc: "Un día especial para nosotros.", media: "img/etapa4.jpeg" },
-  { date: "dd/mm/aaaa", title: "Etapa 5", desc: "Otra aventura juntos.", media: "img/imagen 7.jpeg" },
-  { date: "dd/mm/aaaa", title: "Etapa 6", desc: "Una sonrisa que me quedó grabada.", media: "img/etapa6.jpeg" },
-  { date: "dd/mm/aaaa", title: "Etapa 7", desc: "Un recuerdo que atesoro.", media: "img/Imagen13.jpeg" },
+  { date: "8/03/2025", title: "Primer contacto con la flia", desc: "Ese fue mi primer dia en tu casa, me cago en el puto control de tu tele que no funcionaba, conoci a toda tu familia jajaja. Te amo", media: "img/etapa1.mp4" },
+  { date: "20/03/2025", title: "Stich o JF", desc: "Mi primer regalito a gf, nunca pense que iria a regalarte eso pero cunado lo vi dije este si o si ", media: "img/etapa2.jpeg" },
+  { date: "22/03/2025", title: "Primera cena", desc: "Un momento que quiero guardar para siempre el puto miedo q tenia nunca mas lo voy a sentir", media: "img/etapa3.mp4" },
+  { date: "17/04/2025", title: "Primer Cumpleaños de Guadita", desc: "Primera evz que dije presente en un cumpleaños de Guadita. HDP ME MANDASTE CON TODA TU FLIA, claramente no queria ajajajaaj", media: "img/etapa4.jpeg" },
+  { date: "24/05/2025", title: "Primer dia de novios?", desc: "Que mas puedo decir de ese dia. QUE LINDO ES SER TU NOVIO GUADALUPE", media: "img/imagen 7.jpeg" },
+  { date: "28/06/2025", title: "Nuestra primera vez?", desc: "Que duro q estuvo hacerla entrar", media: "img/etapa6.jpeg" },
+  { date: "ACTUALIDAD", title: "Nososotros en la actualidad", desc: "TE amo para ahora y siempre", media: "img/Imagen13.jpeg" },
 ];
 
 const GALLERY = [
-  { src: "img/Imagen4.jpeg", title: "Recuerdo 1", caption: "Un momento lindo." },
-  { src: "img/Imagen5.jpeg", title: "Recuerdo 2", caption: "Otra foto especial." },
-  { src: "img/Imagen8.jpeg", title: "Recuerdo 3", caption: "Una sonrisa que guardo." },
-  { src: "img/imagen11.jpeg", title: "Recuerdo 4", caption: "Mi lugar favorito." },
-  { src: "img/Imagen12.jpeg", title: "Recuerdo 5", caption: "Nosotros." },
-  { src: "img/WhatsApp Image 2025-12-13 at 5.06.57 PM.jpeg", title: "Recuerdo 6", caption: "Un día especial." },
-  { src: "img/etapa5.jpeg", title: "Recuerdo 7", caption: "Otra aventura." },
-  { src: "img/etapa7.jpeg", title: "Recuerdo 8", caption: "Un momento hermoso." },
-  { src: "img/imagen43.jpeg", title: "Recuerdo 9", caption: "Un momento más." },
-  { src: "img/imagen56.jpeg", title: "Recuerdo 10", caption: "Otro recuerdo." },
-  { src: "img/imagen72.jpeg", title: "Recuerdo 11", caption: "Siempre juntos." },
-  { src: "img/Pensamientos.webp", title: "Pensamientos", caption: "Nuestra canción." },
+  { src: "img/Imagen4.jpeg", title: "LUBBEn ", caption: "Un momento lindo." },
+  { src: "img/Imagen5.jpeg", title: "Nuestra foto mas tierna", caption: "Otra foto especial." },
+  { src: "img/Imagen8.jpeg", title: "Cutes y Matcheados", caption: "Una sonrisa que guardo." },
+  { src: "img/Imagen12.jpeg", title: "que tiernis", caption: "Nosotros." },
+  { src: "img/WhatsApp Image 2025-12-13 at 5.06.57 PM.jpeg", title: "momentos en los que me tapabas la cara", caption: "Un día especial." },
+  { src: "img/etapa5.jpeg", title: "Mi ramo de flores", caption: "Otra aventura." },
+  { src: "img/etapa7.jpeg", title: "Somos hermosos", caption: "Un momento hermoso." },
+  { src: "img/imagen43.jpeg", title: "Somos hermosos x2", caption: "Un momento más." },
+  { src: "img/imagen56.jpeg", title: "Tiernis", caption: "Otro recuerdo." },
+  { src: "img/imagen72.jpeg", title: "Buen dia ese por dios", caption: "Siempre juntos." },
 ];
 
 const DEDICATIONS = [
-  { text: "Si tuviera que elegir un lugar en el mundo, te elegiría a vos.", meta: "— siempre" },
-  { text: "Gracias por hacerme sentir en casa.", meta: "— mi lugar seguro" },
-  { text: "Sos mi parte favorita del día.", meta: "— todos los días" },
-  { text: "Te amo en lo simple y en lo grande.", meta: "— ❤️" },
+  { text: "Elegirte todos los días sigue siendo mi decisión favorita.", meta: "— siempre" },
+  { text: "No fue casualidad, fue destino… y elección.", meta: "— destino" },
+  { text: "Con vos, todo tiene más sentido.", meta: "— juntos" },
+  { text: "El amor también es quedarse.", meta: "— quedarnos" },
+  { text: "Siempre vos.", meta: "— siempre" },
+  { text: "Nuestro lugar es juntos.", meta: "— hogar" },
+  { text: "Donde estás vos, estoy en casa.", meta: "— casa" },
+  { text: "No prometo un amor perfecto, prometo uno real.", meta: "— real" },
+  { text: "Incluso en los días difíciles, te elijo.", meta: "— elección" },
+  { text: "No sos parte de mi vida, sos mi vida.", meta: "— mi vida" },
+  { text: "Te amo en cada versión nuestra.", meta: "— nosotros" },
+  { text: "El amor no es no pelear, es volver a encontrarse.", meta: "— volver" },
+  { text: "Crecimos, aprendimos, nos equivocamos… pero nunca dejamos de volver.", meta: "— crecer" },
+  { text: "El amor verdadero no se va cuando duele, se queda.", meta: "— verdadero" },
+  { text: "Amarte también fue aprender a ser mejor.", meta: "— mejor" },
 ];
 
 const SONG_QUOTES = [
@@ -60,10 +70,11 @@ const SONG_QUOTES = [
 ];
 
 const GOALS_2026 = [
-  { id: "g1", title: "Un viaje juntos", desc: "Un destino que nos ilusione.", icon: "icon-plane" },
-  { id: "g2", title: "Más recuerdos", desc: "Fotos, risas, abrazos.", icon: "icon-camera" },
-  { id: "g3", title: "Cuidarnos siempre", desc: "Estar del mismo lado.", icon: "icon-heart" },
-  { id: "g4", title: "Cumplir un sueño", desc: "Algo importante para nosotros.", icon: "icon-target" },
+  { id: "g1", title: "Mejorar como pareja cada día", desc: "Elegirnos y cuidarnos siempre.", icon: "icon-heart" },
+  { id: "g2", title: "Terminar de conocer nuestras familias", desc: "Estar cerca de los nuestros.", icon: "icon-users" },
+  { id: "g3", title: "Hacer pijamada algún día", desc: "Una noche juntos sin apuro.", icon: "icon-moon" },
+  { id: "g4", title: "Viajar algún viaje juntos", desc: "Un destino que nos ilusione.", icon: "icon-plane" },
+  { id: "g5", title: "Seguir siendo felices", desc: "Sumar momentos lindos.", icon: "icon-sparkle" },
 ];
 
 /* =========================
@@ -472,8 +483,11 @@ function openPhoto(i){
 
 /* Video: se inserta solo cuando desbloquea */
 function buildVideo(){
-  const id = String(CONFIG.video.youtubeId || "").trim();
-  const src = `https://www.youtube.com/embed/${encodeURIComponent(id)}?rel=0&modestbranding=1`;
+  const driveId = String(CONFIG.video.driveId || "").trim();
+  const ytId = String(CONFIG.video.youtubeId || "").trim();
+  const src = driveId
+    ? `https://drive.google.com/file/d/${encodeURIComponent(driveId)}/preview`
+    : `https://www.youtube.com/embed/${encodeURIComponent(ytId)}?rel=0&modestbranding=1`;
   videoEmbed.innerHTML = `
     <iframe
       src="${src}"
